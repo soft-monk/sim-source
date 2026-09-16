@@ -1,0 +1,16 @@
+# 构建产物
+build/
+build-*/
+dist/
+node_modules/
+
+# 本地生成/缓存
+.npm-cache/
+.chrome-*/
+tmp/
+*.accept.log
+accept-*.log
+
+# 编辑器
+.vscode/
+.idea/
