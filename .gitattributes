@@ -1,0 +1,25 @@
+# sim-source · 行尾与文本属性
+#
+# 交付物全部用 LF（仓库内一致），且**源码统一 UTF-8 无 BOM**——
+# 唯一例外是 scripts/acceptance.ps1：Windows PowerShell 5.1 在没有 BOM 时
+# 会按 ANSI 代码页读脚本，中文注释与字符串会直接解析失败。因此：
+#   · .ps1 需要 BOM（`UTF-8 with BOM`，已在文件头写入 EF BB BF）
+#   · 其余源码不需要 BOM，且 MSVC 用 /utf-8 显式指定编码
+* text=auto eol=lf
+
+*.h    text eol=lf
+*.hpp  text eol=lf
+*.cc   text eol=lf
+*.cpp  text eol=lf
+*.txt  text eol=lf
+*.md   text eol=lf
+*.json text eol=lf
+
+# Windows PowerShell 5.1 需要 BOM 才能正确读中文。
+# ⚠ 不要用 working-tree-encoding=UTF-8-BOM：那会把文件在**仓库内**存成无 BOM 的 UTF-8，
+#    新克隆出来就没有 BOM，恰好破坏本意（且本机 git 2.39 对该属性直接报 encode 失败）。
+#    正确做法：BOM 直接写在文件字节里（EF BB BF），按普通文本提交。
+*.ps1  text eol=lf
+
+# 单头第三方库：原样保留，不参与行尾转换
+third_party/** -text

@@ -1,4 +1,4 @@
-﻿# sim-source · 仿真与感知源
+# sim-source · 仿真与感知源
 
 > **没有实装设备时，地图上会动的实体、以及它们在哪，从哪来。**
 
@@ -41,6 +41,22 @@
 ## 文档
 
 `docs/需求/sim-source需求专篇.md`（待写入）
+
+`docs/实现报告.md` —— 实现口径、踩过的坑、**待裁决问题（T1–T6）**、复现命令与实测结果。
+
+## 快速上手
+
+```powershell
+cmake -S . -B build -G "Visual Studio 17 2022" -A x64
+cmake --build build --config Release
+build\bin\Release\example_minimal.exe                              # 最小闭环（绕行禁飞区）
+build\bin\Release\example_full_flow.exe                            # 全流程（节拍/目标/传感器）
+build\bin\Release\selftest.exe                                     # 零依赖自测
+powershell -ExecutionPolicy Bypass -File scripts\acceptance.ps1    # 独立验收（退出码 0/1）
+```
+
+宿主只需要 `#include <sim_source/sim_source.h>`：喂 `SimScenario`（中立结构）进来，
+实现 `ISimSink` / `ISensorModel`（可选 `IClock`）注入回去，拿归一化事件。
 
 ## 许可
 
